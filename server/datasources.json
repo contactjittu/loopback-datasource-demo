@@ -1,0 +1,30 @@
+{
+  "datasources": {
+    "CoffeeShopService": {
+      "name": "CoffeeShopService",
+      "crud": true,
+      "connector": "rest",
+      "operations": [
+        {
+          "template": {
+            "method": "GET",
+            "url": "http://localhost:3000/test",
+            "headers": {
+              "apikey": "{apikey}",
+              "username": "{user}"
+            }
+          },
+          "functions": {
+            "findCoffie": [
+              "apikey",
+              "user"
+            ]
+          }
+        }
+      ],
+      "options": {
+        "headers": {}
+      }
+    }
+  }
+}

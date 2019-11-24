@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "noImplicitAny": true,
+      "allowJs": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "sourceMap": true,
+      "experimentalDecorators": true,
+      "moduleResolution": "node",
+      "target": "es2015",
+      "typeRoots": [
+          "node_modules/@types",
+          "typings"
+      ],
+      "types": [
+          "node"
+      ]
+  }
+}

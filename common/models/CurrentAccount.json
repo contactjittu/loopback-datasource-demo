@@ -1,0 +1,14 @@
+{
+  "name": "CurrentAccount",
+  "base": "PersistedModel",
+  "plural": "currentaccount",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

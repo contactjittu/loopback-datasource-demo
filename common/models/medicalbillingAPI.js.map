@@ -1,0 +1,1 @@
+{"version":3,"file":"medicalbillingAPI.js","sourceRoot":"","sources":["medicalbillingAPI.ts"],"names":[],"mappings":";;;;;;;;AAAA,8CAA2C;AAa3C,IAAM,iBAAiB,GAAvB,MAAM,iBAAiB;IACnB,YAAmB,KAAU;QAAV,UAAK,GAAL,KAAK,CAAK;IAC7B,CAAC;CAEJ,CAAA;AAJK,iBAAiB;IANtB,aAAK,CAAC;QACH,KAAK,EAAE,EACN;QACD,OAAO,EAAE,EACR;KACJ,CAAC;GACI,iBAAiB,CAItB;AACD,MAAM,CAAC,OAAO,GAAG,iBAAiB,CAAC"}
