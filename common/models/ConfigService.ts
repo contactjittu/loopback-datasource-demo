@@ -1,11 +1,9 @@
 import { Model } from "@mean-expert/model";
 const loopback = require("loopback");
-const DataSource = require("./CreateDataSource");
+const DataSource = require("../utils/CreateDataSource");
 const app = require("../../server/server");
 
 /**
- *
- *
  * @class ConfigService
  */
 @Model({
@@ -22,29 +20,11 @@ class ConfigService {
   }
 
   /**
-   *
-   *
    * @memberof ConfigService
    */
   public find = (filter: any, options: any, callback: Function) => {
 
-    console.info("ConfigService.ts :: find called");
-    let app: any;
-    let registry: any;
-
-    if (filter) {
-      if (filter.app) {
-        app = filter.app;
-      } else {
-        app = module.exports = loopback();
-      }
-      registry = filter.registry;
-    } else {
-      console.info("ConfigService.ts :: filter not provided");
-      app = module.exports = loopback();
-    }
-
-    const url = this.getUrl(registry);
+    const url = this.getUrl();
     const configAuth = this.generateBasicAuth('jitendra', 'kumar');
     const configAccessToken = 'sjdhf9823nsedhkj';
 
@@ -57,40 +37,30 @@ class ConfigService {
     /**
      * End: setting up datasource
      */
-    const medicalbillingapi = this.model.app.models.medicalbillingapi;
-    medicalbillingapi.attachTo(this.model.app.dataSources.configservice);
-    const configServicePromise = medicalbillingapi.configservice();
+    const loopbackapi = this.model.app.models.loopbackapi;
+    loopbackapi.attachTo(this.model.app.dataSources.configservice);
+    const configServicePromise = loopbackapi.configservice();
 
     configServicePromise.then((response: any) => {
-      console.info("65 ConfigService.ts :: non-test mode :: configServicePromise :: ");
-      console.log('response========', response)
-      this.process(response, callback);
+      this.process(response);
     }).catch((rejected: any) => {
-      console.info("ConfigService.ts :: response rejected :: " + rejected);
+      console.info("ConfigService.ts :: rejected :: " + rejected);
     });
   }
 
   /**
-   *
-   *
    * @memberof ConfigService
    */
-  public getUrl = (registry: any): string => {
+  public getUrl = (): string => {
     const url = 'http://localhost:3000/datasource.json';
     return url;
   }
 
   /**
-   *
-   *
    * @memberof ConfigService
    */
-  public process = (response: any, callback: Function) => {
-    console.info("ConfigService.ts :: process called", JSON.stringify(response));
-    console.log('kkkkk');
-    
+  public process = (response: any) => {
     if (response) {
-      console.log('\\\\\\')
       const datasources = response.datasources;
       const models = app.models();
       for (const key in datasources) {
@@ -98,27 +68,15 @@ class ConfigService {
           models.forEach((model: any) => {
             if (key === model.modelName) {
               const ds = loopback.createDataSource(datasources[key]);
-              model.modelBuilder.models.medicalbillingapi.attachTo(ds);
+              model.modelBuilder.models.loopbackapi.attachTo(ds);
             }
           });
         }
       }
-      //callback(null, response);
-      /* if (process.env.NODE_ENV == 'Default_Env') {
-        callback(null, response);
-      }
-      if (process.env.NODE_ENV != 'Default_Env') {
-        console.log("ConfigService.ts :: non-test mode ::Post process");
-        // delete response["datasources"];
-        callback(null, response);
-        
-      } */
     }
   }
 
   /**
-   *
-   *
    * @memberof ConfigService
    */
   public generateBasicAuth = (username: string, password: string): string => {

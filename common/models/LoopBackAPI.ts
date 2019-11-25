@@ -1,9 +1,7 @@
 import { Model } from "@mean-expert/model";
 
 /**
- *
- *
- * @class medicalbillingAPI
+ * @class loopbackapi
  */
 @Model({
     hooks: {
@@ -11,9 +9,9 @@ import { Model } from "@mean-expert/model";
     remotes: {
     },
 })
-class medicalbillingAPI {
+class loopbackapi {
     constructor(public model: any) {
     }
 
 }
-module.exports = medicalbillingAPI;
+module.exports = loopbackapi;

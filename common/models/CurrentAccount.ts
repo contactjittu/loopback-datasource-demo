@@ -1,5 +1,8 @@
 import { Model } from '@mean-expert/model';
 
+/**
+ * @class CurrentAccount
+ */
 @Model({
   hooks: {},
   remotes: {}
@@ -10,12 +13,13 @@ class CurrentAccount {
     model.find = this.find;
   }
 
+  /**
+   * @memberof CurrentAccount
+   */
   find = (filter: any, options: any, cb: Function) => {
-    var coffeeShopService = this.model.app.dataSources.CoffeeShopService;
-    console.log('this.model.app.dataSources = ', this.model.app.dataSources)
-    coffeeShopService.findCoffie('apikeyvalue', 'jitendra')
+    var loopbackapi = this.model.app.models.loopbackapi;
+    loopbackapi.findDetails('apikeyvalue', 'jitendra')
       .then((resp: any) => {
-        console.log('resp = ', resp);
         cb(null, resp);
       }).catch((err: any) => {
         cb(err);

@@ -1,6 +1,6 @@
 {
-  "CoffeeShopService": {
-    "name": "CoffeeShopService",
+  "currentaccount": {
+    "name": "currentaccount",
     "connector": "rest",
     "operations": [
       {
@@ -13,7 +13,7 @@
           }
         },
         "functions": {
-          "findCoffie": [
+          "findCoffee": [
             "apikey",
             "user"
           ]

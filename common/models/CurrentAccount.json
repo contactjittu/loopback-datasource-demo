@@ -1,5 +1,5 @@
 {
-  "name": "CurrentAccount",
+  "name": "currentaccount",
   "base": "PersistedModel",
   "plural": "currentaccount",
   "idInjection": false,

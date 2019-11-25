@@ -1,8 +1,6 @@
 let ds: any;
 
 /**
- *
- *
  * @export
  * @class CreateDataSource
  */
@@ -29,8 +27,6 @@ export class CreateDataSource {
     };
   }
   /**
-   *
-   *
    * @returns
    * @memberof CreateDataSource
    */

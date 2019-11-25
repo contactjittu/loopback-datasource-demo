@@ -7,16 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = require("@mean-expert/model");
-let medicalbillingAPI = class medicalbillingAPI {
+let loopbackapi = class loopbackapi {
     constructor(model) {
         this.model = model;
     }
 };
-medicalbillingAPI = __decorate([
+loopbackapi = __decorate([
     model_1.Model({
         hooks: {},
         remotes: {},
     })
-], medicalbillingAPI);
-module.exports = medicalbillingAPI;
-//# sourceMappingURL=medicalbillingAPI.js.map
+], loopbackapi);
+module.exports = loopbackapi;
+//# sourceMappingURL=LoopBackAPI.js.map

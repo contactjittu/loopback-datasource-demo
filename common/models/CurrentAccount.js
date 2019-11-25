@@ -11,10 +11,9 @@ let CurrentAccount = class CurrentAccount {
     constructor(model) {
         this.model = model;
         this.find = (filter, options, cb) => {
-            var coffeeShopService = this.model.app.dataSources.CoffeeShopService;
-            coffeeShopService.findCoffie('apikeyvalue', 'jitendra')
+            var loopbackapi = this.model.app.models.loopbackapi;
+            loopbackapi.findDetails('apikeyvalue', 'jitendra')
                 .then((resp) => {
-                console.log('resp = ', resp);
                 cb(null, resp);
             }).catch((err) => {
                 cb(err);

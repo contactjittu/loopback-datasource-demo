@@ -8,54 +8,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = require("@mean-expert/model");
 const loopback = require("loopback");
-const DataSource = require("./CreateDataSource");
+const DataSource = require("../utils/CreateDataSource");
 const app = require("../../server/server");
 let ConfigService = class ConfigService {
     constructor(model) {
         this.model = model;
         this.find = (filter, options, callback) => {
-            console.info("ConfigService.ts :: find called");
-            let app;
-            let registry;
-            if (filter) {
-                if (filter.app) {
-                    app = filter.app;
-                }
-                else {
-                    app = module.exports = loopback();
-                }
-                registry = filter.registry;
-            }
-            else {
-                console.info("ConfigService.ts :: filter not provided");
-                app = module.exports = loopback();
-            }
-            const url = this.getUrl(registry);
+            const url = this.getUrl();
             const configAuth = this.generateBasicAuth('jitendra', 'kumar');
             const configAccessToken = 'sjdhf9823nsedhkj';
             const headers = { auth: configAuth, token: configAccessToken };
             const dataSourceObj = new DataSource(url, headers).getDataSource();
             app.dataSource("configservice", dataSourceObj);
-            const medicalbillingapi = this.model.app.models.medicalbillingapi;
-            medicalbillingapi.attachTo(this.model.app.dataSources.configservice);
-            const configServicePromise = medicalbillingapi.configservice();
+            const loopbackapi = this.model.app.models.loopbackapi;
+            loopbackapi.attachTo(this.model.app.dataSources.configservice);
+            const configServicePromise = loopbackapi.configservice();
             configServicePromise.then((response) => {
-                console.info("65 ConfigService.ts :: non-test mode :: configServicePromise :: ");
-                console.log('response========', response);
-                this.process(response, callback);
+                this.process(response);
             }).catch((rejected) => {
-                console.info("ConfigService.ts :: response rejected :: " + rejected);
+                console.info("ConfigService.ts :: rejected :: " + rejected);
             });
         };
-        this.getUrl = (registry) => {
+        this.getUrl = () => {
             const url = 'http://localhost:3000/datasource.json';
             return url;
         };
-        this.process = (response, callback) => {
-            console.info("ConfigService.ts :: process called", JSON.stringify(response));
-            console.log('kkkkk');
+        this.process = (response) => {
             if (response) {
-                console.log('\\\\\\');
                 const datasources = response.datasources;
                 const models = app.models();
                 for (const key in datasources) {
@@ -63,7 +42,7 @@ let ConfigService = class ConfigService {
                         models.forEach((model) => {
                             if (key === model.modelName) {
                                 const ds = loopback.createDataSource(datasources[key]);
-                                model.modelBuilder.models.medicalbillingapi.attachTo(ds);
+                                model.modelBuilder.models.loopbackapi.attachTo(ds);
                             }
                         });
                     }

@@ -1,5 +1,5 @@
 {
-  "name": "medicalbillingapi",
+  "name": "loopbackapi",
   "base": "PersistedModel",
   "idInjection": false,
   "options": {

@@ -11,7 +11,7 @@ var loopbackSSL = require('loopback-ssl');
 
 var app = module.exports = loopback();
 
-var DataSource = require('../common/models/CreateDataSource');
+var DataSource = require('../common/utils/CreateDataSource');
 
 app.set('httpMode', true);
 
