@@ -1,7 +1,7 @@
 {
   "name": "currentaccount",
-  "base": "PersistedModel",
   "plural": "currentaccount",
+  "base": "PersistedModel",
   "idInjection": false,
   "options": {
     "validateUpsert": true

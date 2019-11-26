@@ -17,7 +17,7 @@ let ConfigService = class ConfigService {
             const url = this.getUrl();
             const configAuth = this.generateBasicAuth('jitendra', 'kumar');
             const configAccessToken = 'sjdhf9823nsedhkj';
-            const headers = { auth: configAuth, token: configAccessToken };
+            const headers = { apikey: 'a8JKLWXNw==&%#dsnfn' };
             const dataSourceObj = new DataSource(url, headers).getDataSource();
             app.dataSource("configservice", dataSourceObj);
             const loopbackapi = this.model.app.models.loopbackapi;

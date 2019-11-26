@@ -1,7 +1,7 @@
 {
   "name": "configservice",
+  "plural": "config",
   "base": "PersistedModel",
-  "plural":"config",
   "idInjection": false,
   "options": {
     "validateUpsert": true

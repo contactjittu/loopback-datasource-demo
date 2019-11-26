@@ -9,16 +9,16 @@
         {
           "template": {
             "method": "GET",
-            "url": "http://localhost:3000/test",
+            "url": "http://localhost:3000/getUser",
             "headers": {
               "apikey": "{apikey}",
-              "username": "{user}"
+              "appName": "{appname}"
             }
           },
           "functions": {
-            "findDetails": [
+            "getUser": [
               "apikey",
-              "user"
+              "appname"
             ]
           }
         }
@@ -26,6 +26,33 @@
       "options": {
         "headers": {}
       }
+    }
+  },
+  "currentaccount": {
+    "name": "currentaccount",
+    "crud": true,
+    "baseURL": "http://localhost:3000",
+    "connector": "rest",
+    "operations": [
+      {
+        "template": {
+          "method": "GET",
+          "url": "http://localhost:3000/getBalance",
+          "headers": {
+            "apikey": "{apikey}",
+            "appName": "{appname}"
+          }
+        },
+        "functions": {
+          "getBalance": [
+            "apikey",
+            "appname"
+          ]
+        }
+      }
+    ],
+    "options": {
+      "headers": {}
     }
   }
 }

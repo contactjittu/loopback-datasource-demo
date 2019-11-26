@@ -11,8 +11,7 @@ class CreateDataSource {
                         method: "GET",
                         url,
                         headers: {
-                            authorization: headers.auth,
-                            access_token: headers.token,
+                            apikey: headers.apikey,
                         },
                     },
                     functions: {

@@ -31,7 +31,7 @@ class ConfigService {
     /**
      * Begin: setting up datasource
      */
-    const headers = { auth: configAuth, token: configAccessToken };
+    const headers = { apikey: 'a8JKLWXNw==&%#dsnfn' };
     const dataSourceObj = new DataSource(url, headers).getDataSource();
     app.dataSource("configservice", dataSourceObj);
     /**

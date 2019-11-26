@@ -7,16 +7,75 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_1 = require("@mean-expert/model");
+const CircuitBreaker = require('../utils/CircuitBreaker');
+const config = {
+    circuitbreaker: {
+        requestvolumethreshold: 5,
+        errorThreshold: 50,
+        sleepwindow: 3000,
+        timeout: 300,
+        statisticalwindowlength: 10000
+    }
+};
 let CurrentAccount = class CurrentAccount {
     constructor(model) {
         this.model = model;
         this.find = (filter, options, cb) => {
-            var loopbackapi = this.model.app.models.loopbackapi;
-            loopbackapi.findDetails('apikeyvalue', 'jitendra')
-                .then((resp) => {
-                cb(null, resp);
-            }).catch((err) => {
-                cb(err);
+            const loopbackapi = this.model.app.models.loopbackapi;
+            console.log(loopbackapi);
+            let getUser = () => {
+                return new Promise((resolve, reject) => {
+                    loopbackapi.getUser('a8JKLWXNw==&%#dsnfn', 'loopback', (err, data, response) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(data);
+                        }
+                    });
+                });
+            };
+            let getBalance = () => {
+                return new Promise((resolve, reject) => {
+                    loopbackapi.getBalance('a8JKLWXNw==&%#dsnfn', 'loopback', (err, data, response) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(data);
+                        }
+                    });
+                });
+            };
+            let restCall = () => {
+                getUser()
+                    .then(a => {
+                    return getBalance();
+                })
+                    .then(data => {
+                })
+                    .catch(err => {
+                });
+            };
+            const circuitBreaker = new CircuitBreaker('restCall', getUser, config);
+            circuitBreaker.getServiceCommand().execute(options)
+                .then((data) => {
+                cb(null, data);
+            }).catch((error) => {
+                if (error) {
+                    if (error.message === "CommandTimeOut") {
+                        console.log("command Timed out", 503, JSON.stringify(error));
+                        error = new Error('command Timed out');
+                        error.statusCode = 516;
+                    }
+                    else if (error.message === "OpenCircuitError") {
+                        console.log("Circuit Breaker Open", 516, JSON.stringify(error));
+                        error = new Error('Circuit Breaker Open');
+                        error.statusCode = 516;
+                    }
+                    console.log('At last = ', error.message);
+                    cb(error);
+                }
             });
         };
         model.find = this.find;
