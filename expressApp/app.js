@@ -17,23 +17,27 @@ app.use((req, res, next) => {
 });
 
 app.get('/getUser', (req, res) => {
-  const { appname } = req.headers;
+  const { appname, version } = req.headers;
   const data = {
     name: 'Jitendra Kumar',
     branch: 'Pune',
-    appname
+    appname,
+    version
   }
+  res.setHeader('version', version);
   res.status(200).send(data);
 });
 
 app.get('/getBalance', (req, res) => {
-  const { appname } = req.headers;
+  const { appname, version } = req.headers;
   const data = {
     name: 'Jitendra Kumar',
     accountNumber: 12345,
     currentBalance: 10,
-    appname
+    appname,
+    version
   }
+  res.setHeader('version', version);
   res.status(200).send(data);
 });
 

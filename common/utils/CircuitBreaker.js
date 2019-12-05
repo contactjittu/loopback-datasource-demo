@@ -11,6 +11,7 @@ function errorHandler(error) {
 function circuitBreaker(commandName, makeRequest, config) {
     this.hystrixConfig = hystrix.hystrixConfig;
     this.CommandsFactory = hystrix.commandFactory;
+    this.CommandsFactory.resetCache();
     this.serviceCommand = this.CommandsFactory.getOrCreate(commandName)
         .circuitBreakerRequestVolumeThreshold(config.requestvolumethreshold)
         .circuitBreakerErrorThresholdPercentage(config.errorThreshold)

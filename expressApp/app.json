@@ -12,13 +12,33 @@
             "url": "http://localhost:3000/getUser",
             "headers": {
               "apikey": "{apikey}",
-              "appName": "{appname}"
+              "appName": "{appname}",
+              "version": "{version}"
             }
           },
           "functions": {
             "getUser": [
               "apikey",
-              "appname"
+              "appname",
+              "version"
+            ]
+          }
+        },
+        {
+          "template": {
+            "method": "GET",
+            "url": "http://localhost:3000/getBalance",
+            "headers": {
+              "apikey": "{apikey}",
+              "appName": "{appname}",
+              "version": "{version}"
+            }
+          },
+          "functions": {
+            "getBalance": [
+              "apikey",
+              "appname",
+              "version"
             ]
           }
         }
@@ -26,33 +46,6 @@
       "options": {
         "headers": {}
       }
-    }
-  },
-  "currentaccount": {
-    "name": "currentaccount",
-    "crud": true,
-    "baseURL": "http://localhost:3000",
-    "connector": "rest",
-    "operations": [
-      {
-        "template": {
-          "method": "GET",
-          "url": "http://localhost:3000/getBalance",
-          "headers": {
-            "apikey": "{apikey}",
-            "appName": "{appname}"
-          }
-        },
-        "functions": {
-          "getBalance": [
-            "apikey",
-            "appname"
-          ]
-        }
-      }
-    ],
-    "options": {
-      "headers": {}
     }
   }
 }

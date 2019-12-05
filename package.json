@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node .",
-    "posttest": "npm run lint && npm audit"
+    "test": "nyc mocha"
   },
   "dependencies": {
     "@mean-expert/model": "^1.0.9",
@@ -27,8 +27,12 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.12",
+    "chai": "^4.2.0",
     "eslint": "^4.18.2",
     "eslint-config-loopback": "^8.0.0",
+    "mocha": "^6.2.2",
+    "nock": "^11.7.0",
+    "nyc": "^14.1.1",
     "typescript": "^3.7.2"
   },
   "repository": {

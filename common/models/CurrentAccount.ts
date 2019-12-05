@@ -1,5 +1,4 @@
 import { Model } from '@mean-expert/model';
-import { promisify } from "util";
 const CircuitBreaker = require('../utils/CircuitBreaker');
 const config = {
   circuitbreaker: {
@@ -30,45 +29,34 @@ class CurrentAccount {
   find = (filter: any, options: any, cb: Function) => {
 
     const loopbackapi = this.model.app.models.loopbackapi;
-    console.log(loopbackapi)
+    const version = options.req.headers.version;
     let getUser = () => {
       return new Promise((resolve, reject) => {
-        loopbackapi.getUser('a8JKLWXNw==&%#dsnfn', 'loopback', (err: any, data: any, response: any) => {
+        loopbackapi.getUser('a8JKLWXNw==&%#dsnfn', 'loopback', version, (err: any, data: any, response: any) => {
           if (err) {
             reject(err);
           } else {
-            resolve(data);
+            resolve(getBalance(data))
           }
         })
       })
     }
 
-    let getBalance = () => {
+
+
+    let getBalance = (userDetails: any) => {
       return new Promise((resolve, reject) => {
-        loopbackapi.getBalance('a8JKLWXNw==&%#dsnfn', 'loopback', (err: any, data: any, response: any) => {
+        loopbackapi.getBalance('a8JKLWXNw==&%#dsnfn', 'loopback', version, (err: any, balance: any, response: any) => {
           if (err) {
             reject(err);
           } else {
-            resolve(data);
+            resolve({balance, userDetails});
           }
         })
       })
     }
 
-    let restCall = () => {
-      getUser()
-        .then(a => {
-          return getBalance()
-        })
-        .then(data => {
-
-        })
-        .catch(err => {
-          
-        })
-    }
-
-    const circuitBreaker = new CircuitBreaker('restCall', getUser, config);
+    const circuitBreaker = new CircuitBreaker('getUser', getUser, config);
     circuitBreaker.getServiceCommand().execute(options)
       .then((data: any) => {
         cb(null, data);
@@ -83,7 +71,6 @@ class CurrentAccount {
             error = new Error('Circuit Breaker Open')
             error.statusCode = 516;
           }
-          console.log('At last = ', error.message)
           cb(error);
         }
       });

@@ -22,42 +22,32 @@ let CurrentAccount = class CurrentAccount {
         this.model = model;
         this.find = (filter, options, cb) => {
             const loopbackapi = this.model.app.models.loopbackapi;
-            console.log(loopbackapi);
+            const version = options.req.headers.version;
             let getUser = () => {
                 return new Promise((resolve, reject) => {
-                    loopbackapi.getUser('a8JKLWXNw==&%#dsnfn', 'loopback', (err, data, response) => {
+                    loopbackapi.getUser('a8JKLWXNw==&%#dsnfn', 'loopback', version, (err, data, response) => {
                         if (err) {
                             reject(err);
                         }
                         else {
-                            resolve(data);
+                            resolve(getBalance(data));
                         }
                     });
                 });
             };
-            let getBalance = () => {
+            let getBalance = (userDetails) => {
                 return new Promise((resolve, reject) => {
-                    loopbackapi.getBalance('a8JKLWXNw==&%#dsnfn', 'loopback', (err, data, response) => {
+                    loopbackapi.getBalance('a8JKLWXNw==&%#dsnfn', 'loopback', version, (err, balance, response) => {
                         if (err) {
                             reject(err);
                         }
                         else {
-                            resolve(data);
+                            resolve({ balance, userDetails });
                         }
                     });
                 });
             };
-            let restCall = () => {
-                getUser()
-                    .then(a => {
-                    return getBalance();
-                })
-                    .then(data => {
-                })
-                    .catch(err => {
-                });
-            };
-            const circuitBreaker = new CircuitBreaker('restCall', getUser, config);
+            const circuitBreaker = new CircuitBreaker('getUser', getUser, config);
             circuitBreaker.getServiceCommand().execute(options)
                 .then((data) => {
                 cb(null, data);
@@ -73,7 +63,6 @@ let CurrentAccount = class CurrentAccount {
                         error = new Error('Circuit Breaker Open');
                         error.statusCode = 516;
                     }
-                    console.log('At last = ', error.message);
                     cb(error);
                 }
             });
