@@ -30,7 +30,7 @@
     "chai": "^4.2.0",
     "eslint": "^4.18.2",
     "eslint-config-loopback": "^8.0.0",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "nock": "^11.7.0",
     "nyc": "^14.1.1",
     "typescript": "^3.7.2"
